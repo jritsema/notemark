@@ -14,9 +14,9 @@ module.exports = React.createClass({
   },  
 
   componentDidMount: function() {
-    setTimeout(function () {
-      this.setState( { data: data } );
-    }.bind(this), 2000);
+    // setTimeout(function () {
+    //   this.setState( { data: data } );
+    // }.bind(this), 2000);
   },  
 
   render: function() {

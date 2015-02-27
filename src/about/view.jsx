@@ -1,6 +1,5 @@
 var React = require('react');
-window.nodeRequire = require;
-var gui = window.nodeRequire('nw.gui');
+var gui = window.requireNode('nw.gui');
 
 module.exports = React.createClass({
 
