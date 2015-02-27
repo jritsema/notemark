@@ -53,7 +53,7 @@ module.exports = React.createClass({
 
     return (
       <div className="starter-template">
-        <h3>View 1</h3>
+        <h3>Notes</h3>
         {content}
       </div>
     );

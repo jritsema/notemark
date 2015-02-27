@@ -7,7 +7,7 @@ var NavItem = Bootstrap.NavItem;
 module.exports = React.createClass({
   render: function() {
     return (
-      <Navbar brand="React Bootstrap App">
+      <Navbar brand="notemark">
         <Nav>
           {this.props.navigation.map(function(item) {
             return (

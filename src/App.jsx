@@ -1,12 +1,12 @@
 var React = require('react');
-var Page1 = require('./Page1/index.jsx');
-var Page2 = require('./Page2/index.jsx');
+var Notes = require('./notes/index.jsx');
+var About = require('./about/index.jsx');
 var Router = require('./router.jsx');
 
 //this navigation is used for configuring both the menu and the routing
 var navigation = [
-  { id: 1, route: 'Page1', display: 'Page 1', component: Page1 },
-  { id: 2, route: 'Page2', display: 'Page 2', component: Page2 }
+  { id: 1, route: 'notes', display: 'Notes', component: Notes },
+  { id: 2, route: 'about', display: 'About', component: About }
 ];
 
 function renderNav(item) {
