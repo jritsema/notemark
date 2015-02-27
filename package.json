@@ -1,0 +1,28 @@
+{
+  "name": "notemark",
+  "version": "0.0.1",
+  "description": "A note app",
+  "main": "index.html",
+  "window": {
+    "title": "notemark",
+    "toolbar": false,
+    "frame": true,
+    "width": 1024,
+    "height": 768,
+    "position": "center"
+  },  
+  "scripts": {
+    "build": "./node_modules/.bin/browserify -t reactify src/App.jsx > build/bundle.js",
+    "watch": "nodemon --exec npm run build -e jsx"
+  },
+  "author": "John Ritsema",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^0.12.2",
+    "react-bootstrap": "^0.14.0"    
+  },
+  "devDependencies": {
+    "browserify": "^8.1.3",
+    "reactify": "^1.0.0"
+  }
+}
