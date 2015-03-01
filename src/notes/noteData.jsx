@@ -1,14 +1,19 @@
-module.exports = (function () {
+var fs = window.requireNode('fs');
 
+module.exports = (function () {
   'use strict';
 
-  var notes = [];
+  function getNotes(callback) {
 
-  function getNotes() {
-    return [
-      { id: 1, name: 'ZXC' },
-      { id: 2, name: 'asdf' }
-    ];
+    //read markdown files from notes directory
+    fs.readdir('notes', function(err, files) {
+      if (err) throw err;
+      var results = [];
+      for (var i in files) {
+        results.push({ id: i, name: files[i] });
+      }
+      callback(results);
+    });
   }
 
   return {

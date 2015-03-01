@@ -10,7 +10,9 @@ module.exports = React.createClass({
   },  
 
   componentDidMount: function() {
-    this.setState({ notes: NoteData.getNotes() });
+    NoteData.getNotes(function(notes) {
+      this.setState({ notes: notes });
+    }.bind(this));
   },  
 
   render: function() {
