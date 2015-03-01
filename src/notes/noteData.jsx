@@ -10,7 +10,7 @@ module.exports = (function () {
       if (err) throw err;
       var results = [];
       for (var i in files) {
-        results.push({ id: i, name: files[i] });
+        results.push({ id: i, name: files[i].substring(0, (files[i].length-3)) });
       }
       callback(results);
     });
