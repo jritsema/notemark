@@ -5,9 +5,9 @@ module.exports = React.createClass({
   render: function() {
     return (
       <ul>
-        <li>Note 1</li>
-        <li>Note 2</li>
-        <li>Note 3</li>
+        {this.props.notes.map(function(note) {
+          return <li>{note.name}</li>
+        })}
       </ul>
     );
   }

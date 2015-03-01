@@ -5,16 +5,14 @@ module.exports = React.createClass({
 
   render: function() {
 
-    // //show loading indicator
-    // var content;
-    // if (this.props.data.length > 0)
-    //   content = <View1Table data={this.props.data} />
-    // else
-    //   content = <span>Loading...</span>    
+    //show loading indicator
+    var content = <span>Loading...</span>   
+    if (this.props.notes.length > 0)
+      content = <NoteList notes={this.props.notes} />
 
     return (
       <div className="starter-template">
-        <NoteList />
+        {content}
       </div>
     );
   }
