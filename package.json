@@ -10,7 +10,7 @@
     "width": 1024,
     "height": 768,
     "position": "center"
-  },  
+  },
   "scripts": {
     "build": "./node_modules/.bin/browserify -t reactify src/App.jsx > build/bundle.js",
     "watch": "nodemon --exec npm run build -e jsx"
@@ -18,8 +18,9 @@
   "author": "John Ritsema",
   "license": "ISC",
   "dependencies": {
+    "marked": "^0.3.3",
     "react": "^0.12.2",
-    "react-bootstrap": "^0.14.0"    
+    "react-bootstrap": "^0.14.0"
   },
   "devDependencies": {
     "browserify": "^8.1.3",

@@ -7,7 +7,7 @@ var Input = Bootstrap.Input;
 module.exports = React.createClass({
 
   getInitialState: function () {
-    return { selected: 0 };
+    return { selected: -1 };
   },
 
   handleSelect: function (selectedKey) {
