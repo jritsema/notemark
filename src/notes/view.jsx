@@ -7,8 +7,19 @@ module.exports = React.createClass({
 
     //show loading indicator
     var content = <span>Loading...</span>   
-    if (this.props.notes.length > 0)
-      content = <NoteList notes={this.props.notes} />
+
+    //when there's data...
+    if (this.props.notes.length > 0) {
+      content = 
+      <div className="row">
+        <div className="col-md-4">
+          <NoteList notes={this.props.notes} />
+        </div>
+        <div className="col-md-8">
+          rendered markdown goes here
+        </div>
+      </div> 
+    }
 
     return (
       <div className="starter-template">

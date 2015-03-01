@@ -2,6 +2,7 @@ var React = require('react');
 var Bootstrap = require('react-bootstrap');
 var Nav = Bootstrap.Nav;
 var NavItem = Bootstrap.NavItem;
+var Input = Bootstrap.Input;
 
 module.exports = React.createClass({
 
@@ -11,19 +12,30 @@ module.exports = React.createClass({
 
   handleSelect: function (selectedKey) {
     this.setState({ selected: selectedKey });
+
+    //todo: raise event for parent
   },
   
   render: function() {
     return (
-      <Nav bsStyle="pills" stacked activeKey={this.state.selected} onSelect={this.handleSelect}>
-        {this.props.notes.map(function(note) {
-          return (
-            <NavItem eventKey={note.id} title="Item">
-              {note.name}
-            </NavItem>
-          );
-        }, this)}        
-      </Nav>      
+      <div>
+        <Input
+          type="text"
+          placeholder="Search"
+          groupClassName="group-class"
+          wrapperClassName="wrapper-class"
+          labelClassName="label-class" />
+
+        <Nav bsStyle="pills" stacked activeKey={this.state.selected} onSelect={this.handleSelect}>
+          {this.props.notes.map(function(note) {
+            return (
+              <NavItem eventKey={note.id} title="Item">
+                {note.name}
+              </NavItem>
+            );
+          }, this)}        
+        </Nav>
+      </div>      
     );
   }
 });
