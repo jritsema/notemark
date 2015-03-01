@@ -31,7 +31,7 @@ module.exports = React.createClass({
         <Nav bsStyle="pills" stacked activeKey={this.state.selected} onSelect={this.handleSelect}>
           {this.props.notes.map(function(note) {
             return (
-              <NavItem eventKey={note.id} title="Item">
+              <NavItem eventKey={note.id} title={note.name}>
                 {note.name}
               </NavItem>
             );
