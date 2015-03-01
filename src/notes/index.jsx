@@ -13,13 +13,17 @@ module.exports = React.createClass({
     NoteData.getNotes(function(notes) {
       this.setState({ notes: notes });
     }.bind(this));
-  },  
+  },
+
+  getNoteContents: function (note, callback) {
+    NoteData.getNoteContents(note, callback);
+  },
 
   render: function() {
     return (
       <div>
         <Menu navigation={this.props.navigation} selected={this.props.selected} />
-        <View notes={this.state.notes} />
+        <View notes={this.state.notes} getNoteContents={this.getNoteContents} />
       </div>
     );
   }

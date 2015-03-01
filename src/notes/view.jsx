@@ -1,7 +1,19 @@
 var React = require('react');
 var NoteList = require('./NoteList.jsx');
+var RenderMarkdown = require('./RenderMarkdown.jsx');
 
 module.exports = React.createClass({
+
+  getInitialState: function() {
+    return { markdown: undefined };
+  },
+
+  selectedNoteChanged: function (note) {
+    //re-render markdown component with selected note's markdown
+    this.props.getNoteContents(note, function (contents) {
+      this.setState({ markdown: contents });
+    }.bind(this));
+  },
 
   render: function() {
 
@@ -13,10 +25,10 @@ module.exports = React.createClass({
       content = 
       <div className="row">
         <div className="col-md-4">
-          <NoteList notes={this.props.notes} />
+          <NoteList notes={this.props.notes} selectedNoteChanged={this.selectedNoteChanged} />
         </div>
         <div className="col-md-8">
-          rendered markdown goes here
+          <RenderMarkdown markdown={this.state.markdown} />
         </div>
       </div> 
     }

@@ -11,9 +11,11 @@ module.exports = React.createClass({
   },
 
   handleSelect: function (selectedKey) {
+    //state change caues re-render
     this.setState({ selected: selectedKey });
 
-    //todo: raise event for parent
+    //notify parent
+    this.props.selectedNoteChanged(this.props.notes[selectedKey]);
   },
   
   render: function() {
