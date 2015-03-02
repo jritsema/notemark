@@ -7,9 +7,11 @@ Here is an initial set of features:
 
 - browse notes using clean, github flavored markdown
 - edit notes
-- search for notes based on various metadata including file name and tags
+- add note
 - delete notes
+- search for notes based on various metadata including file name and tags
 - tell the app where your note directory is
+- handle sub directories
 
 The app is built using:
 

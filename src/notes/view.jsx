@@ -1,7 +1,8 @@
 var React = require('react');
 var NoteList = require('./NoteList.jsx');
-var RenderMarkdown = require('./RenderMarkdown.jsx');
+var NoteDetail = require('./NoteDetail.jsx');
 
+//the view component renders the note search/listing and note contents panels
 module.exports = React.createClass({
 
   getInitialState: function() {
@@ -28,7 +29,7 @@ module.exports = React.createClass({
           <NoteList notes={this.props.notes} selectedNoteChanged={this.selectedNoteChanged} />
         </div>
         <div className="col-md-8">
-          <RenderMarkdown markdown={this.state.markdown} />
+          <NoteDetail markdown={this.state.markdown} />
         </div>
       </div> 
     }
