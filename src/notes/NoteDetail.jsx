@@ -5,26 +5,50 @@ var ButtonGroup = Bootstrap.ButtonGroup;
 var Button = Bootstrap.Button;
 var Glyphicon = Bootstrap.Glyphicon;
 var RenderMarkdown = require('./RenderMarkdown.jsx');
+var EditMarkdown = require('./EditMarkdown.jsx');
 
 module.exports = React.createClass({
 
-  getInitialState: function () {
-    return { mode: 'view' };
+  getInitialState: function() {
+    return { view: true };
   },
+
+  onModeChange: function() {
+    this.setState({ view: !this.state.view});
+  },
+
+  onDelete: function () {
+    alert('delete');
+  },
+
+  onInfo: function () {
+    alert('info');
+  },  
 
   render: function() {
     if (this.props.markdown && this.props.markdown.length > 0) {
+
+      //view
+      var modeComponent = <RenderMarkdown markdown={this.props.markdown} />
+      var modeButton = <Glyphicon glyph="edit" />
+
+      //edit
+      if (!this.state.view) {
+        modeComponent = <EditMarkdown markdown={this.props.markdown} />
+        modeButton = <Glyphicon glyph="save" />
+      }
+
       return (
         <div>
           <ButtonToolbar>
             <ButtonGroup>
-              <Button><Glyphicon glyph="edit" /></Button>
-              <Button><Glyphicon glyph="trash" /></Button>
-              <Button><Glyphicon glyph="info-sign" /></Button>            
+              <Button onClick={this.onModeChange}>{modeButton}</Button>
+              <Button onClick={this.onDelete}><Glyphicon glyph="trash" /></Button>
+              <Button onClick={this.onInfo}><Glyphicon glyph="info-sign" /></Button>
             </ButtonGroup>
           </ButtonToolbar>
           <br/>
-          <RenderMarkdown markdown={this.props.markdown} />
+          {modeComponent}
         </div>
       );
     }
