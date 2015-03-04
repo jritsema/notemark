@@ -13,6 +13,11 @@ module.exports = React.createClass({
     return { view: true };
   },
 
+  //reset the initial state when the input data changes (i.e., this.props.markdown)
+  componentWillReceiveProps: function (nextProps) {
+    this.setState(this.getInitialState());
+  },
+
   onModeChange: function() {
     this.setState({ view: !this.state.view});
   },
@@ -23,9 +28,10 @@ module.exports = React.createClass({
 
   onInfo: function () {
     alert('info');
-  },  
+  },
 
   render: function() {
+
     if (this.props.markdown && this.props.markdown.length > 0) {
 
       //view
@@ -52,7 +58,9 @@ module.exports = React.createClass({
         </div>
       );
     }
-    return <div/>
+
+    //no markdown supplied, just show blank
+    return <div />
   }
 
 });

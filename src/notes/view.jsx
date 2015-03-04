@@ -10,7 +10,7 @@ module.exports = React.createClass({
   },
 
   selectedNoteChanged: function (note) {
-    //re-render markdown component with selected note's markdown
+    //re-render note detail component with selected note's markdown
     this.props.getNoteContents(note, function (contents) {
       this.setState({ markdown: contents });
     }.bind(this));
