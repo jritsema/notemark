@@ -1,6 +1,7 @@
 var React = require('react');
 var NoteList = require('./NoteList.jsx');
 var NoteDetail = require('./NoteDetail.jsx');
+var PleaseWait = require('../PleaseWait.jsx');
 
 //the view component renders the note search/listing and note contents panels
 module.exports = React.createClass({
@@ -19,7 +20,7 @@ module.exports = React.createClass({
   render: function() {
 
     //show loading indicator
-    var content = <span>Loading...</span>   
+    var content = <PleaseWait />
 
     //when there's data...
     if (this.props.notes.length > 0) {

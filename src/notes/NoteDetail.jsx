@@ -65,5 +65,4 @@ module.exports = React.createClass({
     //no markdown supplied, just show blank
     return <div />
   }
-
 });
