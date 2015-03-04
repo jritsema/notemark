@@ -1,5 +1,6 @@
 var React = require('react');
 var Bootstrap = require('react-bootstrap');
+var Panel = Bootstrap.Panel;
 var ButtonToolbar = Bootstrap.ButtonToolbar;
 var ButtonGroup = Bootstrap.ButtonGroup;
 var Button = Bootstrap.Button;
@@ -53,8 +54,10 @@ module.exports = React.createClass({
               <Button onClick={this.onInfo}><Glyphicon glyph="info-sign" /></Button>
             </ButtonGroup>
           </ButtonToolbar>
-          <br/>
-          {modeComponent}
+          <br />
+          <Panel>
+            {modeComponent}
+          </Panel>
         </div>
       );
     }

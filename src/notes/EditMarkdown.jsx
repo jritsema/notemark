@@ -1,11 +1,23 @@
 var React = require('react');
-var Bootstrap = require('react-bootstrap');
+var AceEditor = require('./AceEditor.jsx');
 
 module.exports = React.createClass({
 
   render: function() {
     return (
-      <span>edit markdown</span>
+      <AceEditor
+        ref="noteEditor" 
+        name="noteEditor"
+        theme="textmate"
+        mode="markdown"
+        tabSize="2"
+        fontSize="18px"
+        width="700px"
+        height="550px"        
+        highlightActiveLine={false}
+        wordWrap={true}
+        value={this.props.markdown}
+      />      
     );
   }
 });
