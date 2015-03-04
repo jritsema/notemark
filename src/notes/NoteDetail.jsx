@@ -5,7 +5,7 @@ var ButtonToolbar = Bootstrap.ButtonToolbar;
 var ButtonGroup = Bootstrap.ButtonGroup;
 var Button = Bootstrap.Button;
 var Glyphicon = Bootstrap.Glyphicon;
-var RenderMarkdown = require('./RenderMarkdown.jsx');
+var RenderMarkdown = require('../RenderMarkdown.jsx');
 var EditMarkdown = require('./EditMarkdown.jsx');
 
 module.exports = React.createClass({

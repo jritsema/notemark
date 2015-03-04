@@ -1,22 +1,23 @@
 var React = require('react');
-var gui = window.requireNode('nw.gui');
+var RenderMarkdown = require('../RenderMarkdown.jsx');
+var fs = window.requireNode('fs');
 
 module.exports = React.createClass({
 
   getInitialState: function() {
-    var manifest = gui.App.manifest;
-    return { 
-      name: manifest.name,
-      description: manifest.description,
-      appVersion:  manifest.version
-    };
+    return { markdown: '' };
+  },
+
+  componentDidMount: function () {
+    //read readme.md markdown to be rendered
+    var markdown = fs.readFileSync('./readme.md', { encoding: 'utf-8' });
+    this.setState({ markdown: markdown });
   },
 
   render: function() {
     return (
       <div className="starter-template">
-        <h3>{this.state.name} {this.state.appVersion}</h3>
-        <p>{this.state.description}</p>
+        <RenderMarkdown markdown={this.state.markdown} />
       </div>
     );
   }
