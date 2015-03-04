@@ -1,5 +1,3 @@
-window.requireNode = require;
-
 var React = require('react');
 var Notes = require('./notes/index.jsx');
 var About = require('./about/index.jsx');
