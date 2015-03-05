@@ -3,6 +3,10 @@ var AceEditor = require('./AceEditor.jsx');
 
 module.exports = React.createClass({
 
+  getValue: function() {
+    return this.refs.noteEditor.getValue();
+  },
+
   render: function() {
     return (
       <AceEditor

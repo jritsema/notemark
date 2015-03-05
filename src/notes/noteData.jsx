@@ -3,17 +3,19 @@ var fs = window.requireNode('fs');
 module.exports = (function () {
   'use strict';
 
+  var directory = 'notes';
+
   function getNotes(callback) {
 
     //read markdown files from notes directory
-    fs.readdir('notes', function(err, files) {
+    fs.readdir(directory, function(err, files) {
       if (err) throw err;
       var results = [];
       for (var i in files) {
         results.push({ 
           id: i, 
           name: files[i].substring(0, (files[i].length-3)),
-          fileName: 'notes/' + files[i]
+          fileName: directory + '/' + files[i]
         });
       }
       callback(results);
@@ -27,9 +29,17 @@ module.exports = (function () {
     });
   }
 
+  function saveNoteContents(note, contents, callback) {
+    fs.writeFile(note.fileName, contents, function (err) {
+      if (err) throw err;
+      if (callback) callback();
+    });
+  }
+
   return {
     getNotes: getNotes,
-    getNoteContents: getNoteContents
+    getNoteContents: getNoteContents,
+    saveNoteContents: saveNoteContents
   };
 
 }());

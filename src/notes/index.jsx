@@ -20,11 +20,19 @@ module.exports = React.createClass({
     NoteData.getNoteContents(note, callback);
   },
 
+  saveNoteContents: function (note, newMarkdown, callback) {
+    NoteData.saveNoteContents(note, newMarkdown, callback);
+  },
+
+  //pass data down into child components (note list and methods to get/save note contents)
   render: function() {
     return (
       <div>
         <Menu navigation={this.props.navigation} selected={this.props.selected} />
-        <View notes={this.state.notes} getNoteContents={this.getNoteContents} />
+        <View 
+          notes={this.state.notes} 
+          getNoteContents={this.getNoteContents} 
+          saveNoteContents={this.saveNoteContents} />
       </div>
     );
   }

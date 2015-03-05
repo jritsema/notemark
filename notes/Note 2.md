@@ -1,5 +1,4 @@
-Note 2
-======
+### Note 2
 
 - asdf
 - asdf
@@ -7,4 +6,10 @@ Note 2
 
 this is `some code`
 
+```
+do code blocks work?
+```
+
 [link](http://google.com)
+
+[link](http://apple.com)
