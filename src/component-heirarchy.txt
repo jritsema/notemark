@@ -1,0 +1,14 @@
+App.jsx //renders page components based on routes (html fragments #)
+  <Notes> //state = note list, handles data access (NoteData)
+    <Menu>
+    <View> //state = selected note|markdown
+      <NoteList> //pass note list, state = selected note index
+        <Input>
+        <Nav>
+      <NoteDetail> //pass markdown, state = view/edit mode
+        <ButtonToolbar>
+        <RenderMarkdown>|<EditMarkdown> //pass markdown
+  <About>
+    <Menu>
+    <View>
+      <RenderMarkdown> //readme.md
