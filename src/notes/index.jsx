@@ -24,6 +24,12 @@ module.exports = React.createClass({
     NoteData.saveNoteContents(note, newMarkdown, callback);
   },
 
+  newNote: function () {
+    NoteData.addNote(function(notes) {
+      this.setState({ notes: notes });
+    }.bind(this));
+  },
+
   //pass data down into child components (note list and methods to get/save note contents)
   render: function() {
     return (
@@ -32,7 +38,8 @@ module.exports = React.createClass({
         <View 
           notes={this.state.notes} 
           getNoteContents={this.getNoteContents} 
-          saveNoteContents={this.saveNoteContents} />
+          saveNoteContents={this.saveNoteContents}
+          newNote={this.newNote} />
       </div>
     );
   }

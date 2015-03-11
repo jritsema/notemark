@@ -22,10 +22,9 @@ module.exports = React.createClass({
   onModeChange: function() {
     //save note when changing from edit back to view mode
     if (!this.state.view) {
-      //get edited content and raise event if the contents changed
+      //get edited content and raise event
       var newMarkdown = this.refs.editor.getValue();
-      if (this.props.markdown !== newMarkdown)
-        this.props.saveNoteContents(newMarkdown);
+      this.props.saveNoteContents(newMarkdown);
     }
 
     //toggle state    

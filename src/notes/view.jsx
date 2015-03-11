@@ -8,22 +8,34 @@ var PleaseWait = require('../PleaseWait.jsx');
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return { markdown: undefined, note: undefined };
+    return { 
+      selectedNoteIndex: -1, 
+      markdown: undefined, 
+      note: undefined 
+    };
   },
 
-  selectedNoteChanged: function (note) {
-    //re-render NoteDetail component with selected note's markdown
+  selectedNoteChanged: function (selectedIndex) {
+    //ask parent to fetch new selected note's contents
+    //and then update state to cause child NoteList and NoteDetail to re-render
+    var note = this.props.notes[selectedIndex];
     this.props.getNoteContents(note, function (contents) {
-      this.setState({ markdown: contents, note: note });
+      this.setState({ 
+        selectedNoteIndex: selectedIndex,
+        markdown: contents, 
+        note: note 
+      });
     }.bind(this));
   },
 
   saveNoteContents: function (newMarkdown) {
     //save note, and when complete, update state which causes 
     //NoteDetail component to re-render with new markdown
-    this.props.saveNoteContents(this.state.note, newMarkdown, function() {
-      this.setState({ markdown: newMarkdown, note: this.state.note });
-    }.bind(this));
+    if (this.state.note.isNew || (this.state.markdown !== newMarkdown)) {
+      this.props.saveNoteContents(this.state.note, newMarkdown, function() {
+        this.setState({ markdown: newMarkdown, note: this.state.note });
+      }.bind(this));
+    }
   },
 
   render: function() {
@@ -38,7 +50,9 @@ module.exports = React.createClass({
         <div className="col-md-4">
           <NoteList 
             notes={this.props.notes} 
-            selectedNoteChanged={this.selectedNoteChanged} />
+            selectedNoteIndex={this.state.selectedNoteIndex}
+            selectedNoteChanged={this.selectedNoteChanged}
+            newNote={this.props.newNote} />
         </div>
         <div className="col-md-8">
           <NoteDetail 
