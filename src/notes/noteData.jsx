@@ -1,5 +1,6 @@
 var fs = window.requireNode('fs');
 var os = window.requireNode('os');
+var path = window.requireNode('path');
 
 module.exports = (function () {
   'use strict';
@@ -15,7 +16,7 @@ module.exports = (function () {
       for (var i in files) {
         notes.push({ 
           id: i, 
-          name: files[i].substring(0, (files[i].length-3)),
+          name: path.basename(files[i], '.md'),
           path: directory + '/' + files[i],
           isNew: false
         });
@@ -38,6 +39,31 @@ module.exports = (function () {
   }
 
   function saveNoteContents(note, contents, callback) {
+
+    //for new notes:
+    //  parse the note contents and use the first line as the file name and title
+    //  if the file name already exists, don't overwrite it, instead append a (1)
+    if (note.isNew) {
+      var lines = contents.split(os.EOL);
+      if (lines) {
+        note.name = lines[0];
+        note.path = directory + '/' + note.name + '.md';
+      }
+  
+      var files = fs.readdirSync(directory);
+      var exists = false;
+      for (var i in files) {
+        if (path.basename(files[i], '.md') == note.name) {
+          exists = true;
+          break;
+        }
+      }
+      if (exists) {
+        note.name = note.name + ' (1)';
+        note.path = directory + '/' + note.name + '.md';
+      }
+    }
+
     fs.writeFile(note.path, contents, function (err) {
       if (err) throw err;
       note.isNew = false;
@@ -50,7 +76,7 @@ module.exports = (function () {
     notes.unshift({
       id: -1,
       name: 'New Note',
-      path: directory + '/' + 'new.md',
+      path: directory + '/' + 'New Note.md',
       isNew: true
     });
     
