@@ -37,7 +37,8 @@ module.exports = React.createClass({
   },
 
   onDelete: function () {
-    alert('delete');
+    if (confirm('are you sure?'))
+      this.props.onDelete();
   },
 
   onInfo: function () {

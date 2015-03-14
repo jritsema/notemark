@@ -46,6 +46,10 @@ module.exports = React.createClass({
     this.selectedNoteChanged(0);
   },
 
+  deleteNote: function () {
+    this.props.deleteNote(this.state.note);
+  },
+
   render: function() {
 
     //is this a new note
@@ -72,7 +76,8 @@ module.exports = React.createClass({
             markdown={this.state.markdown} 
             note={this.state.note}
             saveNoteContents={this.saveNoteContents}
-            isNew={isNew} />
+            isNew={isNew}
+            onDelete={this.deleteNote} />
         </div>
       </div> 
     }

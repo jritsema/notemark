@@ -18,14 +18,6 @@ module.exports = React.createClass({
     }.bind(this));
   },
 
-  getNoteContents: function (note, callback) {
-    NoteData.getNoteContents(note, callback);
-  },
-
-  saveNoteContents: function (note, newMarkdown, callback) {
-    NoteData.saveNoteContents(note, newMarkdown, callback);
-  },
-
   newNote: function () {
     NoteData.addNote(function(notes) {
 
@@ -41,9 +33,10 @@ module.exports = React.createClass({
         <Menu navigation={this.props.navigation} selected={this.props.selected} />
         <View 
           notes={this.state.notes} 
-          getNoteContents={this.getNoteContents} 
-          saveNoteContents={this.saveNoteContents}
-          newNote={this.newNote} />
+          getNoteContents={NoteData.getNoteContents} 
+          saveNoteContents={NoteData.saveNoteContents}
+          newNote={this.newNote}
+          deleteNote={NoteData.deleteNote} />
       </div>
     );
   }

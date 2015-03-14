@@ -87,11 +87,16 @@ module.exports = (function () {
     callback(notes);
   }
 
+  function deleteNote(note) {
+    alert('delete ' + note.path);
+  }  
+
   return {
     getNotes: getNotes,
     getNoteContents: getNoteContents,
     saveNoteContents: saveNoteContents,
-    addNote: addNote
+    addNote: addNote,
+    deleteNote: deleteNote
   };
 
 }());
