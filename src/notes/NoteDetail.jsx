@@ -14,9 +14,14 @@ module.exports = React.createClass({
     return { view: true };
   },
 
-  //reset the initial state when the input data changes (i.e., this.props.markdown)
+  //reset the initial state (switch back to view mode) when 
+  //the input data changes (i.e., this.props.markdown)
+  //except, default to edit mode for new notes
   componentWillReceiveProps: function (nextProps) {
-    this.setState(this.getInitialState());
+    if (nextProps && nextProps.isNew)
+      this.setState({ view: false });
+    else
+      this.setState(this.getInitialState());
   },
 
   onModeChange: function() {

@@ -16,7 +16,7 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="starter-template">
+      <div className="page">
         <RenderMarkdown markdown={this.state.markdown} />
       </div>
     );

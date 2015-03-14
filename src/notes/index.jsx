@@ -12,7 +12,9 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     NoteData.getNotes(function(notes) {
+
       this.setState({ notes: notes });
+
     }.bind(this));
   },
 
@@ -26,7 +28,9 @@ module.exports = React.createClass({
 
   newNote: function () {
     NoteData.addNote(function(notes) {
+
       this.setState({ notes: notes });
+      
     }.bind(this));
   },
 

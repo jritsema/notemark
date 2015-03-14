@@ -16,7 +16,7 @@ module.exports = (function () {
         notes.push({ 
           id: i, 
           name: files[i].substring(0, (files[i].length-3)),
-          fileName: directory + '/' + files[i],
+          path: directory + '/' + files[i],
           isNew: false
         });
       }
@@ -27,7 +27,7 @@ module.exports = (function () {
   function getNoteContents(note, callback) {
     //newly created notes don't exist yet on the hardrive
     if (!note.isNew) {
-      fs.readFile(note.fileName, { encoding: 'utf-8' }, function (err, data) {
+      fs.readFile(note.path, { encoding: 'utf-8' }, function (err, data) {
         if (err) throw err;
         callback(data);
       });
@@ -38,7 +38,7 @@ module.exports = (function () {
   }
 
   function saveNoteContents(note, contents, callback) {
-    fs.writeFile(note.fileName, contents, function (err) {
+    fs.writeFile(note.path, contents, function (err) {
       if (err) throw err;
       note.isNew = false;
       if (callback) callback();
@@ -50,7 +50,7 @@ module.exports = (function () {
     notes.unshift({
       id: -1,
       name: 'New Note',
-      fileName: directory + '/' + 'new.md',
+      path: directory + '/' + 'new.md',
       isNew: true
     });
     

@@ -20,11 +20,13 @@ module.exports = React.createClass({
     //and then update state to cause child NoteList and NoteDetail to re-render
     var note = this.props.notes[selectedIndex];
     this.props.getNoteContents(note, function (contents) {
+
       this.setState({ 
         selectedNoteIndex: selectedIndex,
         markdown: contents, 
         note: note 
       });
+
     }.bind(this));
   },
 
@@ -38,7 +40,18 @@ module.exports = React.createClass({
     }
   },
 
+  newNote: function () {
+    //notify parent, then select new note
+    this.props.newNote();
+    this.selectedNoteChanged(0);
+  },
+
   render: function() {
+
+    //is this a new note
+    var isNew = false;
+    if (this.state.note)
+      isNew = this.state.note.isNew;
 
     //show loading indicator
     var content = <PleaseWait />
@@ -52,19 +65,20 @@ module.exports = React.createClass({
             notes={this.props.notes} 
             selectedNoteIndex={this.state.selectedNoteIndex}
             selectedNoteChanged={this.selectedNoteChanged}
-            newNote={this.props.newNote} />
+            newNote={this.newNote} />
         </div>
         <div className="col-md-8">
           <NoteDetail 
             markdown={this.state.markdown} 
             note={this.state.note}
-            saveNoteContents={this.saveNoteContents} />
+            saveNoteContents={this.saveNoteContents}
+            isNew={isNew} />
         </div>
       </div> 
     }
 
     return (
-      <div className="starter-template">
+      <div className="page">
         {content}
       </div>
     );
