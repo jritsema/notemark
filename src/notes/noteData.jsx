@@ -9,6 +9,7 @@ module.exports = (function () {
   var notes = [];
 
   function getNotes(callback) {
+    notes = [];
 
     //read markdown files from notes directory
     fs.readdir(directory, function(err, files) {
@@ -74,7 +75,7 @@ module.exports = (function () {
   function addNote(callback) {
     //add a new note to the beginning of the list and reorder
     notes.unshift({
-      id: -1,
+      id: 0,
       name: 'New Note',
       path: directory + '/' + 'New Note.md',
       isNew: true
@@ -82,13 +83,27 @@ module.exports = (function () {
     
     //update index
     for (var i in notes)
-      notes[i].id++;
+      notes[i].id = i;
 
     callback(notes);
   }
 
-  function deleteNote(note) {
-    alert('delete ' + note.path);
+  function deleteNote(note, callback) {
+
+    //try to delete the file
+    fs.unlinkSync(note.path);
+
+    //after delete, remove the note from the notes list
+    var index = notes.indexOf(note);
+    if (index > -1)
+      notes.splice(index, 1);
+
+    //update note id index
+    for (var i in notes)
+      notes[i].id = i;
+
+    //callback with update notes list
+    callback(notes);    
   }  
 
   return {

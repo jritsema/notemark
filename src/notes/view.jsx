@@ -48,6 +48,7 @@ module.exports = React.createClass({
 
   deleteNote: function () {
     this.props.deleteNote(this.state.note);
+    this.selectedNoteChanged(0);
   },
 
   render: function() {

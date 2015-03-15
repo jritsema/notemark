@@ -8,23 +8,23 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return { notes: [] };
-  },  
+  },
+
+  updateNotes: function (notes) {
+    this.setState({ notes: notes });
+  },
 
   componentDidMount: function() {
-    NoteData.getNotes(function(notes) {
-
-      this.setState({ notes: notes });
-
-    }.bind(this));
+    NoteData.getNotes(this.updateNotes);
   },
 
   newNote: function () {
-    NoteData.addNote(function(notes) {
-
-      this.setState({ notes: notes });
-      
-    }.bind(this));
+    NoteData.addNote(this.updateNotes);
   },
+
+  deleteNote: function (note) {
+    NoteData.deleteNote(note, this.updateNotes);
+  },  
 
   //pass data down into child components (note list and methods to get/save note contents)
   render: function() {
@@ -36,7 +36,7 @@ module.exports = React.createClass({
           getNoteContents={NoteData.getNoteContents} 
           saveNoteContents={NoteData.saveNoteContents}
           newNote={this.newNote}
-          deleteNote={NoteData.deleteNote} />
+          deleteNote={this.deleteNote} />
       </div>
     );
   }
