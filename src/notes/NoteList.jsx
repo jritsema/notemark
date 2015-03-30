@@ -28,7 +28,7 @@ module.exports = React.createClass({
 
           {this.props.notes.map(function(note) {
             return (
-              <NavItem key={note.id} eventKey={note.id} title={note.name}>
+              <NavItem key={note.id} eventKey={note.id} title={note.path}>
                 {note.name}
               </NavItem>
             );
