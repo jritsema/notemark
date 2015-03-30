@@ -5,8 +5,16 @@ var path = window.requireNode('path');
 module.exports = (function () {
   'use strict';
 
-  var directory = 'notes';
+  var directory = './notes';
   var notes = [];
+
+  function getNotesDirectory() {
+    return directory;
+  }
+
+  function setNotesDirectory(notesDirectory) {
+    directory = notesDirectory;
+  }
 
   function getNotes(callback) {
     notes = [];
@@ -107,6 +115,8 @@ module.exports = (function () {
   }  
 
   return {
+    getNotesDirectory: getNotesDirectory,
+    setNotesDirectory: setNotesDirectory,
     getNotes: getNotes,
     getNoteContents: getNoteContents,
     saveNoteContents: saveNoteContents,

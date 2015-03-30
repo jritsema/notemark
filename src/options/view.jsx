@@ -6,7 +6,7 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      notesDirectory: 'foo' 
+      notesDirectory: this.props.notesDirectory
     };
   },
 
@@ -16,6 +16,10 @@ module.exports = React.createClass({
     });
   },  
 
+  componentWillUnmount: function() {
+    this.props.save(this.state);
+  },
+
   render: function() {
     return (
       <div className="page">
@@ -24,7 +28,7 @@ module.exports = React.createClass({
             type="text" 
             label="Notes Directory" 
             value={this.state.notesDirectory}
-            onChange={this.onChange} 
+            onChange={this.onChange}
             labelClassName="col-xs-2" 
             wrapperClassName="col-xs-8" />
         </form>
