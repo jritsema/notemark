@@ -2,10 +2,10 @@ var fs = window.requireNode('fs');
 var os = window.requireNode('os');
 var path = window.requireNode('path');
 
-module.exports = (function () {
+module.exports = (function() {
   'use strict';
 
-  var directory = './notes';
+  var directory = '/Users/john/Dropbox/notes';
   var notes = [];
 
   function getNotesDirectory() {
@@ -18,21 +18,45 @@ module.exports = (function () {
 
   function getNotes(callback) {
     notes = [];
-
-    //read markdown files from notes directory
-    fs.readdir(directory, function(err, files) {
+    walk(directory, function (err, files) {
       if (err) throw err;
-      for (var i in files) {
-        notes.push({ 
-          id: i, 
-          name: path.basename(files[i], '.md'),
-          path: directory + '/' + files[i],
-          isNew: false
-        });
+      if (files) {
+        for (var i in files) {
+          notes.push({
+            id: i, 
+            name: path.basename(files[i], '.md'),
+            path: files[i],
+            isNew: false
+          });
+        }
       }
       callback(notes);
     });
   }
+
+  function walk(dir, done) {
+    var results = [];
+    fs.readdir(dir, function(err, list) {
+      if (err) return done(err);
+      var i = 0;
+      (function next() {
+        var file = list[i++];
+        if (!file) return done(null, results);
+        file = dir + '/' + file;
+        fs.stat(file, function(err, stat) {
+          if (stat && stat.isDirectory()) {
+            walk(file, function(err, res) {
+              results = results.concat(res);
+              next();
+            });
+          } else {
+            results.push(file);
+            next();
+          }
+        });
+      })();
+    });
+  };
 
   function getNoteContents(note, callback) {
     //newly created notes don't exist yet on the hardrive
