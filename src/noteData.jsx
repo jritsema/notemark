@@ -22,11 +22,14 @@ module.exports = (function() {
       if (err) throw err;
       if (files) {
         for (var i in files) {
+          var item = files[i];
           notes.push({
             id: i, 
-            name: path.basename(files[i], '.md'),
-            path: files[i],
-            isNew: false
+            name: path.basename(item.file, '.md'),
+            path: item.file,
+            isNew: false,
+            created: item.stat.birthtime,
+            modified: item.stat.mtime
           });
         }
       }
@@ -49,8 +52,13 @@ module.exports = (function() {
               results = results.concat(res);
               next();
             });
-          } else {
-            results.push(file);
+          } 
+          else {
+            var temp = {
+              file: file,
+              stat: stat
+            };
+            results.push(temp);
             next();
           }
         });

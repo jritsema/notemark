@@ -7,6 +7,7 @@ var Button = Bootstrap.Button;
 var Glyphicon = Bootstrap.Glyphicon;
 var RenderMarkdown = require('../RenderMarkdown.jsx');
 var EditMarkdown = require('./EditMarkdown.jsx');
+var os = window.requireNode('os');
 
 module.exports = React.createClass({
 
@@ -42,7 +43,13 @@ module.exports = React.createClass({
   },
 
   onInfo: function () {
-    alert('info');
+    var note = this.props.note;
+    alert(
+      'name: ' + note.name + os.EOL + os.EOL +
+      'path: ' + note.path + os.EOL + os.EOL +
+      'created: ' + note.created + os.EOL + os.EOL +
+      'modified: ' + note.modified// + os.EOL + os.EOL +
+    );
   },
 
   render: function() {
