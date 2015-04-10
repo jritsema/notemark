@@ -5,10 +5,10 @@
   "main": "index.html",
   "window": {
     "title": "notemark",
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
-    "width": 1024,
-    "height": 768,
+    "width": 1280,
+    "height": 750,
     "position": "center"
   },
   "scripts": {
