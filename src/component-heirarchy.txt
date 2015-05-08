@@ -3,6 +3,7 @@
     <Menu>
     <View> //state = selected note|markdown|index
       <NoteList> //props = notes, selected index
+        <New>
         <Input>
         <Nav>
       <NoteDetail> //props = markdown, state = view/edit mode

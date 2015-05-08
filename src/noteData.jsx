@@ -68,7 +68,7 @@ module.exports = (function() {
 
   function getNoteContents(note, callback) {
     //newly created notes don't exist yet on the hardrive
-    if (!note.isNew) {
+    if (note && !note.isNew) {
       fs.readFile(note.path, { encoding: 'utf-8' }, function (err, data) {
         if (err) throw err;
         callback(data);
@@ -112,7 +112,7 @@ module.exports = (function() {
     });
   }
 
-  function addNote(callback) {
+  function addNote() {
     //add a new note to the beginning of the list and reorder
     notes.unshift({
       id: 0,
@@ -125,26 +125,51 @@ module.exports = (function() {
     for (var i in notes)
       notes[i].id = i;
 
-    callback(notes);
+    return notes;
   }
 
-  function deleteNote(note, callback) {
+  function deleteNote(note) {
 
     //try to delete the file
     fs.unlinkSync(note.path);
 
     //after delete, remove the note from the notes list
-    var index = notes.indexOf(note);
-    if (index > -1)
-      notes.splice(index, 1);
+    for (var i = notes.length-1; i > -1; i--) {
+      if (notes[i].path === note.path)
+        notes.splice(i, 1);
+    };
 
     //update note id index
     for (var i in notes)
       notes[i].id = i;
 
     //callback with update notes list
-    callback(notes);    
-  }  
+    return notes;   
+  }
+
+  function search(searchText, callback) {
+    //execute search after 3 characters have been typed
+    if (searchText && searchText.length >= 3) {
+
+      //search path for matching text which includes both directory and file name
+      var results = [];
+      notes.forEach(function(item) {
+        if (item.path.toUpperCase().indexOf(searchText.toUpperCase()) > -1) {
+          //make a copy of the object so that it can be updated safely
+          var temp = JSON.stringify(item);
+          results.push(JSON.parse(temp));
+        }
+      });
+
+      //update note id index
+      for (var i in results)
+        results[i].id = i;
+
+      callback(results);
+    }
+    else //no search text specified, so return all notes
+      callback(notes);
+  }
 
   return {
     getNotesDirectory: getNotesDirectory,
@@ -153,7 +178,8 @@ module.exports = (function() {
     getNoteContents: getNoteContents,
     saveNoteContents: saveNoteContents,
     addNote: addNote,
-    deleteNote: deleteNote
+    deleteNote: deleteNote,
+    search: search
   };
 
 }());

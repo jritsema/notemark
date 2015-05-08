@@ -1,7 +1,6 @@
 var React = require('react');
 var NoteList = require('./NoteList.jsx');
 var NoteDetail = require('./NoteDetail.jsx');
-var PleaseWait = require('../PleaseWait.jsx');
 
 //the view component renders the note search/listing and note contents panels
 //syncs selected note with NoteDetail
@@ -11,23 +10,39 @@ module.exports = React.createClass({
     return { 
       selectedNoteIndex: -1, 
       markdown: undefined, 
-      note: undefined 
+      note: undefined,
+      deleting: false
     };
   },
 
+  noteStateChange: function (notes, selectedIndex) {
+    //ask parent for selected note's contents and then update state
+    if (notes) {
+      var note = notes[selectedIndex];
+      if (note) {
+        this.props.getNoteContents(note, function (contents) {
+          this.setState({ 
+            selectedNoteIndex: selectedIndex,
+            markdown: contents, 
+            note: note,
+            deleting: false
+          });
+        }.bind(this));        
+      }
+    }
+  },  
+
+  componentWillReceiveProps: function (nextProps) {
+    //when the note list changes (search results, add, delete, etc.), 
+    //automatically select the first note in the list
+    //note that this event should only fire for note list changes
+    //since notes in the only data in props
+    this.noteStateChange(nextProps.notes, 0);
+  },
+
+  //raised by NoteList component when user selects a new note from the list
   selectedNoteChanged: function (selectedIndex) {
-    //ask parent to fetch new selected note's contents
-    //and then update state to cause child NoteList and NoteDetail to re-render
-    var note = this.props.notes[selectedIndex];
-    this.props.getNoteContents(note, function (contents) {
-
-      this.setState({ 
-        selectedNoteIndex: selectedIndex,
-        markdown: contents, 
-        note: note 
-      });
-
-    }.bind(this));
+    this.noteStateChange(this.props.notes, selectedIndex);
   },
 
   saveNoteContents: function (newMarkdown) {
@@ -38,17 +53,21 @@ module.exports = React.createClass({
         this.setState({ markdown: newMarkdown, note: this.state.note });
       }.bind(this));
     }
-  },
+  }, 
 
-  newNote: function () {
-    //notify parent, then select new note
-    this.props.newNote();
-    this.selectedNoteChanged(0);
-  },
+  deleteNote: function () {    
+    //HACK: update deleting state (should only be in this state until note list changes, 
+    //which happens right after delete (next))
+    //should use flux pattern instead
+    this.setState({ 
+      selectedNoteIndex: this.state.selectedIndex,
+      markdown: this.state.contents, 
+      note: this.state.note,
+      deleting: true
+    });
 
-  deleteNote: function () {
-    this.props.deleteNote(this.state.note);
-    this.selectedNoteChanged(0);
+    //bubble up
+    this.props.deleteNote(this.state.note);    
   },
 
   render: function() {
@@ -58,34 +77,28 @@ module.exports = React.createClass({
     if (this.state.note)
       isNew = this.state.note.isNew;
 
-    //show loading indicator
-    var content = <PleaseWait />
-
-    //when there's data...
-    if (this.props.notes.length > 0) {
-      content = 
-      <div className="row">
-        <div className="col-md-4">
-          <NoteList 
-            notes={this.props.notes} 
-            selectedNoteIndex={this.state.selectedNoteIndex}
-            selectedNoteChanged={this.selectedNoteChanged}
-            newNote={this.newNote} />
-        </div>
-        <div className="col-md-8">
-          <NoteDetail 
-            markdown={this.state.markdown} 
-            note={this.state.note}
-            saveNoteContents={this.saveNoteContents}
-            isNew={isNew}
-            onDelete={this.deleteNote} />
-        </div>
-      </div> 
-    }
-
     return (
       <div className="page">
-        {content}
+        <div className="row">
+          <div className="col-md-4">
+            <NoteList 
+              notes={this.props.notes}
+              selectedNoteIndex={this.state.selectedNoteIndex}
+              selectedNoteChanged={this.selectedNoteChanged}
+              newNote={this.props.newNote}
+              onSearchTextChanged={this.props.onSearchTextChanged}
+              deleting={this.state.deleting}
+            />
+          </div>
+          <div className="col-md-8">
+            <NoteDetail 
+              markdown={this.state.markdown} 
+              note={this.state.note}
+              saveNoteContents={this.saveNoteContents}
+              isNew={isNew}
+              onDelete={this.deleteNote} />
+          </div>
+        </div>
       </div>
     );
   }

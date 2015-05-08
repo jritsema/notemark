@@ -7,7 +7,7 @@ var NoteData = require('../NoteData.jsx');
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return { notes: [] };
+    return { notes: undefined };
   },
 
   updateNotes: function (notes) {
@@ -19,12 +19,16 @@ module.exports = React.createClass({
   },
 
   newNote: function () {
-    NoteData.addNote(this.updateNotes);
+    this.updateNotes(NoteData.addNote());
   },
 
   deleteNote: function (note) {
-    NoteData.deleteNote(note, this.updateNotes);
-  },  
+    this.updateNotes(NoteData.deleteNote(note));
+  },
+
+  onSearchTextChanged: function (searchText) {
+    NoteData.search(searchText, this.updateNotes);
+  },
 
   //pass data down into child components (note list and methods to get/save note contents)
   render: function() {
@@ -36,7 +40,9 @@ module.exports = React.createClass({
           getNoteContents={NoteData.getNoteContents} 
           saveNoteContents={NoteData.saveNoteContents}
           newNote={this.newNote}
-          deleteNote={this.deleteNote} />
+          deleteNote={this.deleteNote} 
+          onSearchTextChanged={this.onSearchTextChanged}
+        />
       </div>
     );
   }
