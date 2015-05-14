@@ -5,7 +5,7 @@ var path = window.requireNode('path');
 module.exports = (function() {
   'use strict';
 
-  var directory = '/Users/john/Dropbox/notes';
+  var directory = './notes';
   var notes = [];
 
   function getNotesDirectory() {
