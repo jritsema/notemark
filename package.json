@@ -2,6 +2,12 @@
   "name": "notemark",
   "version": "1.0.0",
   "description": "A note app that supports markdown",
+  "keywords": [
+    "note",
+    "notes",
+    "markdown",
+    "editor"
+  ],  
   "main": "index.html",
   "window": {
     "title": "notemark",
@@ -14,8 +20,8 @@
   "scripts": {
     "build": "./node_modules/.bin/browserify -t reactify src/App.jsx > build/bundle.js",
     "watch": "nodemon --exec npm run build -e jsx"
-  },
-  "author": "John Ritsema",
+  },  
+  "author": "jritsema",
   "license": "MIT",
   "dependencies": {
     "brace": "^0.5.0",
