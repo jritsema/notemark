@@ -1,7 +1,7 @@
 {
   "name": "notemark",
   "version": "1.0.0",
-  "description": "A note app",
+  "description": "A note app that supports markdown",
   "main": "index.html",
   "window": {
     "title": "notemark",
@@ -16,7 +16,7 @@
     "watch": "nodemon --exec npm run build -e jsx"
   },
   "author": "John Ritsema",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "brace": "^0.5.0",
     "marked": "^0.3.3",

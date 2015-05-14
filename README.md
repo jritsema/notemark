@@ -1,7 +1,7 @@
 notemark
 =========
 
-Mostly an experimental app to learn react.js.  Goal for this project is to be a cross-platform desktop app to manage notes.  Notes are just markdown files on your hard drive (Dropbox for syncing?).  
+Mostly an experimental app to learn react.js.  The goal for this project is to be a cross-platform desktop app to manage notes where notes are just markdown files on your hard drive (you can point the app to your dropbox folder for syncing across machines).
 
 Here is an initial set of features:
 
@@ -10,8 +10,7 @@ Here is an initial set of features:
 - add note
 - delete notes
 - search for notes based on various metadata including file name and tags
-- tell the app where your note directory is
-- handle sub directories
+- tell the app where your note directory is (handle sub directories)
 
 The app is built using:
 
@@ -28,3 +27,10 @@ To get started:
 - `$ npm install` to install tooling
 - `$ npm run build` to build
 - `$ npm run watch` to rebuild when jsx files change 
+
+Future things to consider:
+
+- replace npm-based build system with webpack (need to learn more about this)
+- replace nw.js (node-webkit) with the [Electron Framework](https://github.com/atom/electron)
+- add a more sophisticated messaging design using [flux](https://github.com/facebook/flux) or even [RxJS](https://reactive-extensions.github.io/RxJS/)
+- add more features
