@@ -1,7 +1,11 @@
 notemark
 =========
 
-Mostly an experimental app to learn react.js.  The goal for this project is to be a cross-platform desktop app to manage notes where notes are just markdown files on your hard drive (you can point the app to your dropbox folder for syncing across machines).
+This was mostly an experimental app to learn [react.js](http://reactjs.com).  The goal for this project is to be a cross-platform desktop app to manage notes where notes are just markdown files on your hard drive (you can point the app to your dropbox folder for syncing across machines).
+
+![Screenshot](screenshot1.png)
+
+![Screenshot](screenshot2.png)
 
 Here is an initial set of features:
 
