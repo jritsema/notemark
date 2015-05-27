@@ -23,14 +23,19 @@ module.exports = (function() {
       if (files) {
         for (var i in files) {
           var item = files[i];
-          notes.push({
-            id: i, 
-            name: path.basename(item.file, '.md'),
-            path: item.file,
-            isNew: false,
-            created: item.stat.birthtime,
-            modified: item.stat.mtime
-          });
+
+          //only bring in .md files
+          var extension = '.md';
+          if (path.extname(item.file) === extension) {
+            notes.push({
+              id: i, 
+              name: path.basename(item.file, extension),
+              path: item.file,
+              isNew: false,
+              created: item.stat.birthtime,
+              modified: item.stat.mtime
+            });            
+          }
         }
       }
       callback(notes);
