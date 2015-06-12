@@ -18,7 +18,7 @@
     "position": "center"
   },
   "scripts": {
-    "build": "./node_modules/.bin/browserify -t reactify src/App.jsx > build/bundle.js",
+    "build": "browserify -t reactify src/App.jsx > build/bundle.js",
     "watch": "nodemon --exec npm run build -e jsx"
   },  
   "author": "jritsema",
