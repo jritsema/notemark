@@ -1,26 +1,20 @@
 {
   "name": "notemark",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A cross-platform desktop app to manage notes where notes are just markdown files on your hard drive (you can point the app to your dropbox folder for syncing across machines).",
   "keywords": [
     "note",
     "notes",
     "markdown",
     "editor"
-  ],  
-  "main": "index.html",
-  "window": {
-    "title": "notemark",
-    "toolbar": false,
-    "frame": true,
-    "width": 1280,
-    "height": 750,
-    "position": "center"
-  },
+  ],
+  "main": "index.js",
   "scripts": {
     "build": "browserify -t reactify src/App.jsx > build/bundle.js",
-    "watch": "nodemon --exec npm run build -e jsx"
-  },  
+    "watch": "nodemon --exec npm run build -e jsx",
+    "app": "electron .",
+    "debug": "electron . devtools"
+  },
   "author": "jritsema",
   "license": "MIT",
   "dependencies": {
@@ -31,6 +25,7 @@
   },
   "devDependencies": {
     "browserify": "^8.1.3",
+    "electron-prebuilt": "^0.30.2",
     "reactify": "^1.0.0"
   }
 }

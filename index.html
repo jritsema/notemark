@@ -8,18 +8,9 @@
   </head>
   <body>
     <script>
-      //workaround for collisions with node-webkit and browserify
+      //workaround for collisions with electron and browserify
       window.requireNode = require;
-      window.processNode = process;
-
-      //build menu for mac (to allow copy/paste)
-      if (process.platform === 'darwin') {
-        var gui = require('nw.gui');
-        var nativeMenuBar = new gui.Menu({ type: "menubar" });
-        nativeMenuBar.createMacBuiltin('notemark');
-        gui.Window.get().menu = nativeMenuBar;
-      }
-    </script>
+    </script>    
     <script src="build/bundle.js"></script>
   </body>
 </html>
