@@ -13,7 +13,8 @@
     "build": "browserify -t reactify src/App.jsx > build/bundle.js",
     "watch": "nodemon --exec npm run build -e jsx",
     "app": "electron .",
-    "debug": "electron . devtools"
+    "debug": "electron . devtools",
+    "start": "npm run app"
   },
   "author": "jritsema",
   "license": "MIT",
