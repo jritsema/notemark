@@ -29,6 +29,7 @@ To get started:
 - `$ npm run watch` to rebuild when jsx files change 
 - `$ npm run app` to run the app
 - `$ npm run debug` to run the app with the dev tools showing
+- `$ npm start` to build and run
 
 Future things to consider:
 
