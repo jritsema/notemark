@@ -1,5 +1,9 @@
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
+var fs = require('fs');
+
+var configContents = fs.readFileSync('./config.json', 'utf8');
+var config = JSON.parse(configContents);
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is GCed.
@@ -17,13 +21,13 @@ app.on('window-all-closed', function() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
-  
+
   // Create the browser window.
-  mainWindow = new BrowserWindow({ 
+  mainWindow = new BrowserWindow({
     title: 'notemark',
-    width: 1280, 
-    height: 750, 
-    frame: true 
+    width: config.window.width,
+    height: config.window.height,
+    frame: true
   });
 
   // and load the index.html of the app.
