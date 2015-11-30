@@ -5,7 +5,11 @@ var path = window.requireNode('path');
 module.exports = (function() {
   'use strict';
 
-  var directory = './notes';
+  //read the notes directory from config.json
+  var configContents = fs.readFileSync('./config.json', 'utf8');
+  var config = JSON.parse(configContents);
+  var directory = config.notesDirectory;
+
   var notes = [];
 
   function getNotesDirectory() {
@@ -28,13 +32,13 @@ module.exports = (function() {
           var extension = '.md';
           if (path.extname(item.file) === extension) {
             notes.push({
-              id: i, 
+              id: i,
               name: path.basename(item.file, extension),
               path: item.file,
               isNew: false,
               created: item.stat.birthtime,
               modified: item.stat.mtime
-            });            
+            });
           }
         }
       }
@@ -57,7 +61,7 @@ module.exports = (function() {
               results = results.concat(res);
               next();
             });
-          } 
+          }
           else {
             var temp = {
               file: file,
@@ -95,7 +99,7 @@ module.exports = (function() {
         note.name = lines[0];
         note.path = directory + '/' + note.name + '.md';
       }
-  
+
       var files = fs.readdirSync(directory);
       var exists = false;
       for (var i in files) {
@@ -125,7 +129,7 @@ module.exports = (function() {
       path: directory + '/' + 'New Note.md',
       isNew: true
     });
-    
+
     //update index
     for (var i in notes)
       notes[i].id = i;
@@ -149,7 +153,7 @@ module.exports = (function() {
       notes[i].id = i;
 
     //callback with update notes list
-    return notes;   
+    return notes;
   }
 
   function search(searchText, callback) {
