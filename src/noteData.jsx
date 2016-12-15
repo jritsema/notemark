@@ -6,9 +6,11 @@ module.exports = (function() {
   'use strict';
 
   //read the notes directory from config.json
-  var configContents = fs.readFileSync('./config.json', 'utf8');
-  var config = JSON.parse(configContents);
-  var directory = config.notesDirectory;
+  //var configContents = fs.readFileSync('./config.json', 'utf8');
+  //var config = JSON.parse(configContents);
+  //var directory = config.notesDirectory;
+
+  var directory = '';
 
   var notes = [];
 

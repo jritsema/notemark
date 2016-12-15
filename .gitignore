@@ -1,2 +1,7 @@
 node_modules
 build/bundle.js
+
+# builds
+notemark-darwin-x64
+notemark-linux-ia32
+notemark-win32-x64

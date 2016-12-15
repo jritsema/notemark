@@ -2,9 +2,6 @@ var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var fs = require('fs');
 
-var configContents = fs.readFileSync('./config.json', 'utf8');
-var config = JSON.parse(configContents);
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is GCed.
 var mainWindow = null;
@@ -21,8 +18,8 @@ app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     title: 'notemark',
-    width: config.window.width,
-    height: config.window.height,
+    width: 2024,
+    height: 768,
     frame: true
   });
 
