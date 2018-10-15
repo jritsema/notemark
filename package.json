@@ -9,6 +9,9 @@
     "markdown",
     "editor"
   ],
+  "engines": {
+    "node": ">=4.0 <5.0"
+  },
   "scripts": {
     "build": "browserify -t reactify src/App.jsx > bundle.js",
     "watch": "nodemon --exec npm run build -e jsx",
