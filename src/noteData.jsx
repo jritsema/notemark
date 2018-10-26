@@ -12,7 +12,7 @@ module.exports = (function() {
   //var config = JSON.parse(configContents);
   //var directory = config.notesDirectory;
 
-  var directory = './notes';
+  var directory = '';
 
   var notes = [];
 
