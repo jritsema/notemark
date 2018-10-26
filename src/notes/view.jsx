@@ -20,7 +20,11 @@ module.exports = React.createClass({
     if (notes) {
       var note = notes[selectedIndex];
       if (note) {
-        this.props.getNoteContents(note, function (contents) {
+        this.props.getNoteContents(note, function (err, contents) {
+          if (err) {
+            alert("Sorry, there was a problem reading the note: " + err);
+            return;
+          }
           this.setState({ 
             selectedNoteIndex: selectedIndex,
             markdown: contents, 
@@ -45,11 +49,14 @@ module.exports = React.createClass({
     this.noteStateChange(this.props.notes, selectedIndex);
   },
 
-  saveNoteContents: function (newMarkdown) {
+  saveNoteContents: function (newMarkdown, encrypt) {
     //save note, and when complete, update state which causes 
     //NoteDetail component to re-render with new markdown
-    if (this.state.note.isNew || (this.state.markdown !== newMarkdown)) {
-      this.props.saveNoteContents(this.state.note, newMarkdown, function() {
+    if (this.state.note.isNew || 
+      ((this.state.markdown !== newMarkdown 
+        || this.state.note.encrypted !== encrypt
+        || encrypt))) {
+      this.props.saveNoteContents(this.state.note, newMarkdown, encrypt, function() {
         this.setState({ markdown: newMarkdown, note: this.state.note });
       }.bind(this));
     }
