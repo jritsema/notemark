@@ -1,6 +1,6 @@
 {
   "name": "notemark",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "index.js",
   "description": "A cross-platform desktop app to manage notes where notes are just markdown files on your hard drive (you can point the app to your dropbox folder for syncing across machines).",
   "keywords": [
