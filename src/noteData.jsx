@@ -106,7 +106,7 @@ module.exports = (function() {
             return;
           }
           //take line 2
-          var encryptedBits = data.split(os.EOL)[1];
+          var encryptedBits = data.split("\n")[1];
           var bytes  = CryptoJS.AES.decrypt(encryptedBits, password);
           try {
             newData = bytes.toString(CryptoJS.enc.Utf8);
