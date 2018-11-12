@@ -12,15 +12,22 @@ var os = window.requireNode('os');
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return { view: true };
+    return { view: true, lock: false };
   },
 
   //reset the initial state (switch back to view mode) when 
   //the input data changes (i.e., this.props.markdown)
   //except, default to edit mode for new notes
   componentWillReceiveProps: function (nextProps) {
-    if (nextProps && nextProps.isNew)
-      this.setState({ view: false });
+    if (nextProps) {
+      if (nextProps.isNew) {
+        this.setState({ view: false });
+      }
+      else if (nextProps.note) {
+        //bind lock state to note's encrypted property
+        this.setState({ lock: nextProps.note.encrypted });
+      }
+    }
     else
       this.setState(this.getInitialState());
   },
@@ -30,7 +37,7 @@ module.exports = React.createClass({
     if (!this.state.view) {
       //get edited content and raise event
       var newMarkdown = this.refs.editor.getValue();
-      this.props.saveNoteContents(newMarkdown);
+      this.props.saveNoteContents(newMarkdown, this.state.lock);
     }
 
     //toggle state    
@@ -48,8 +55,13 @@ module.exports = React.createClass({
       'name: ' + note.name + os.EOL + os.EOL +
       'path: ' + note.path + os.EOL + os.EOL +
       'created: ' + note.created + os.EOL + os.EOL +
-      'modified: ' + note.modified// + os.EOL + os.EOL +
+      'modified: ' + note.modified + os.EOL + os.EOL +
+      'encrypted: ' + note.encrypted
     );
+  },
+
+  onLock: function() {
+    this.setState({ lock: !this.state.lock });
   },
 
   render: function() {
@@ -66,6 +78,7 @@ module.exports = React.createClass({
         modeButton = <Glyphicon glyph="save" />
       }
 
+      //lock icon is only enabled when in edit mode
       return (
         <div>
           <ButtonToolbar>
@@ -73,6 +86,7 @@ module.exports = React.createClass({
               <Button onClick={this.onModeChange}>{modeButton}</Button>
               <Button onClick={this.onDelete}><Glyphicon glyph="trash" /></Button>
               <Button onClick={this.onInfo}><Glyphicon glyph="info-sign" /></Button>
+              <Button disabled={this.state.view} active={this.state.lock} onClick={this.onLock}><Glyphicon glyph="lock" /></Button>
             </ButtonGroup>
           </ButtonToolbar>
           <br />

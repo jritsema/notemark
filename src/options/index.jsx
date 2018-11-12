@@ -7,6 +7,7 @@ module.exports = React.createClass({
 
   save: function (options) {
     NoteData.setNotesDirectory(options.notesDirectory);
+    NoteData.setPassword(options.password);
   },
 
   render: function() {
@@ -15,6 +16,7 @@ module.exports = React.createClass({
         <Menu navigation={this.props.navigation} selected={this.props.selected} />
         <View 
           notesDirectory={NoteData.getNotesDirectory()} 
+          password={NoteData.getPassword()} 
           save={this.save} />
       </div>
     );

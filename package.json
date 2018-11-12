@@ -1,6 +1,6 @@
 {
   "name": "notemark",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "index.js",
   "description": "A cross-platform desktop app to manage notes where notes are just markdown files on your hard drive (you can point the app to your dropbox folder for syncing across machines).",
   "keywords": [
@@ -9,6 +9,9 @@
     "markdown",
     "editor"
   ],
+  "engines": {
+    "node": ">=4.0 <5.0"
+  },
   "scripts": {
     "build": "browserify -t reactify src/App.jsx > bundle.js",
     "watch": "nodemon --exec npm run build -e jsx",
@@ -23,6 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "brace": "^0.5.0",
+    "crypto-js": "^3.1.8",
     "marked": "^0.3.3",
     "react": "^0.12.2",
     "react-bootstrap": "^0.14.0"

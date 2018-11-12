@@ -1,6 +1,8 @@
 var fs = window.requireNode('fs');
 var os = window.requireNode('os');
 var path = window.requireNode('path');
+var CryptoJS = require("crypto-js");
+var ENCRYPTION_HEADER = '-----ENCRYPTED-----';
 
 module.exports = (function() {
   'use strict';
@@ -22,6 +24,16 @@ module.exports = (function() {
     directory = notesDirectory;
   }
 
+  var password = "";
+
+  function getPassword() {
+    return password;
+  }
+
+  function setPassword(value) {
+    password = value;
+  }
+
   function getNotes(callback) {
     notes = [];
     walk(directory, function (err, files) {
@@ -39,7 +51,8 @@ module.exports = (function() {
               path: item.file,
               isNew: false,
               created: item.stat.birthtime,
-              modified: item.stat.mtime
+              modified: item.stat.mtime,
+              encrypted: false
             });
           }
         }
@@ -78,19 +91,46 @@ module.exports = (function() {
   };
 
   function getNoteContents(note, callback) {
+    
     //newly created notes don't exist yet on the hardrive
     if (note && !note.isNew) {
       fs.readFile(note.path, { encoding: 'utf-8' }, function (err, data) {
         if (err) throw err;
-        callback(data);
+
+        //is this note encrypted?
+        var newData = data;
+        if (data.startsWith(ENCRYPTION_HEADER)) {          
+          note.encrypted = true;
+          if (password === "") {
+            callback("Please set password on Options tab.");
+            return;
+          }
+          //take line 2
+          var encryptedBits = data.split(os.EOL)[1];
+          var bytes  = CryptoJS.AES.decrypt(encryptedBits, password);
+          try {
+            newData = bytes.toString(CryptoJS.enc.Utf8);
+          }
+          catch (err) {
+            console.error(err);
+            var msg = err;
+            if (err.message === "Malformed UTF-8 data")  {
+              msg = "Invalid password";
+            }
+            callback(msg);
+            return;
+          }
+        }
+
+        callback(null, newData);
       });
     }
     else {
-      callback('New Note' + os.EOL + '==========');
+      callback(null, 'New Note' + os.EOL + '==========');
     }
   }
 
-  function saveNoteContents(note, contents, callback) {
+  function saveNoteContents(note, contents, encrypt, callback) {
 
     //for new notes:
     //  parse the note contents and use the first line as the file name and title
@@ -116,7 +156,17 @@ module.exports = (function() {
       }
     }
 
-    fs.writeFile(note.path, contents, function (err) {
+    note.encrypted = encrypt;
+
+    //do we need to encrypt?
+    var newContents = contents;
+    if (encrypt) {
+      newContents = ENCRYPTION_HEADER;
+      newContents += os.EOL;
+      newContents += CryptoJS.AES.encrypt(contents, password);
+    }
+
+    fs.writeFile(note.path, newContents, function (err) {
       if (err) throw err;
       note.isNew = false;
       if (callback) callback();
@@ -129,7 +179,7 @@ module.exports = (function() {
       id: 0,
       name: 'New Note',
       path: directory + '/' + 'New Note.md',
-      isNew: true
+      isNew: true,
     });
 
     //update index
@@ -190,7 +240,9 @@ module.exports = (function() {
     saveNoteContents: saveNoteContents,
     addNote: addNote,
     deleteNote: deleteNote,
-    search: search
+    search: search,
+    getPassword: getPassword,
+    setPassword: setPassword
   };
 
 }());
